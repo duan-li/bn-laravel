@@ -1,0 +1,36 @@
+version: '3.1'
+services:
+  php:
+    image: localphp:8.1
+    container_name: bn-php
+    entrypoint:
+      - php
+    command: "-v"
+    working_dir: "/var/www"
+    volumes:
+      - .:/var/www
+
+  composer:
+    image: localphp:8.1
+    container_name: bn-composer
+    entrypoint:
+      - composer.phar
+    command: "-V"
+    working_dir: "/var/www"
+    volumes:
+      - .:/var/www
+
+
+  server:
+    image: localphp:8.1
+    container_name: bn-server
+    entrypoint:
+      - php
+      - artisan
+      - serve
+    command: "--host=0.0.0.0 --port=8000"
+    working_dir: "/var/www"
+    volumes:
+      - .:/var/www
+    ports:
+      - 8111:8000
