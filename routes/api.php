@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,9 +23,13 @@ Route::get('ready', function (){
     return 'ready';
 });
 
-Route::prefix('v1')->middleware('auth:api')
-        ->group(function () {
+Route::prefix('v1')->middleware('auth:api')->group(function () {
+
     Route::get('home', function (){
         return 'ok';
     });
+
+    Route::get('profile', [UserProfileController::class, 'index']);
+    Route::post('profile', [UserProfileController::class, 'update']);
+
 });
